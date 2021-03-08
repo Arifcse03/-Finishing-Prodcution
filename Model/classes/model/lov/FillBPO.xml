@@ -43,144 +43,78 @@
     </Properties>
   </Variable>
   <SQLQuery>
-    <![CDATA[/* Formatted on 3/10/2020 11:52:18 AM (QP5 v5.256.13226.35510) by Mr. Abdul Ahad */
-SELECT ST.PRODUCTION_DATE,
-       ooha.cust_po_number bpo_no,
-       ooha.header_id,
-       ooha.org_id,
-       mmc.style_name,
-       mmc.season,
-       hca.CUST_ACCOUNT_ID,
-       MMC.BUYER_ID,
-       hp.known_as,
-       ooha.CUST_PO_NUMBER || '/' || oola.LINE_NUMBER stn_no,
-       oola.inventory_item_id,
-       wdj.WIP_ENTITY_ID,
-       we.WIP_ENTITY_NAME,
-       rrp.color,
-       mmc.line_no,
-       mmcl.quantity,
-       NVL (TOTAL_DAY_PRODUCTION, 0) bel_qty,
-       NVL (TOTAL_DAY_rejection, 0) rejection_total,
-         NVL (mmcl.quantity, 0)
-       - NVL (TOTAL_DAY_PRODUCTION, 0)
-       - NVL (TOTAL_DAY_rejection, 0)
-          wip_qty,
-       /*(NVL((SELECT (NVL(rpln.sam_finish, 0))
-             from MNJ_MFG_ROUTING_PLAN   rpln
-            where rpln.style= mmc.STYLE_NAME
-            and rpln.season= mmc.SEASON
-            and rpln.color=rrp.color
-            and rpln.customer_id=HCA.CUST_ACCOUNT_ID
-            and rownum=1),
-           0)) SAM,*/
-       FindFinishProdLastSAM (
-          MMC.BUYER_ID,
-          mmc.style_name,
-          mmc.season,
-          rrp.color,
-          (NVL (
-              (SELECT (NVL (rpln.WASH, 0))
-                 FROM MNJ_MFG_ROUTING_PLAN rpln
-                WHERE     rpln.style = mmc.STYLE_NAME
-                      AND rpln.season = mmc.SEASON
-                      AND rpln.color = rrp.color
-                      AND rpln.customer_id = HCA.CUST_ACCOUNT_ID
-                      AND ROWNUM = 1),
-              0)))
-          sam,
-       (NVL (
-           (SELECT (NVL (rpln.WASH, 0))
-              FROM MNJ_MFG_ROUTING_PLAN rpln
-             WHERE     rpln.style = mmc.STYLE_NAME
-                   AND rpln.season = mmc.SEASON
-                   AND rpln.color = rrp.color
-                   AND rpln.customer_id = HCA.CUST_ACCOUNT_ID
-                   AND ROWNUM = 1),
-           0))
-          WASH,
-       (SELECT DECODE (StyleLineEO.TRACK_BASIS,
-                       'Style Name', StyleLineEO.STYLE_NAME,
-                       'Style Number', StyleLineEO.STYLE_NUMBER)
-          FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
-               pwc_mfg_bss_buyer_h pwcmfgbssbuyerh
-         WHERE     StyleLineEO.STYLE_IDENTIFIER = mmc.STYLE_NAME
-               AND pwcmfgbssbuyerh.BUYER_ID = HCA.CUST_ACCOUNT_ID
-               --AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID
-               AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-               AND ROWNUM = 1)
-          CURRENT_STYLE,
-       (SELECT SeasonDetailEO.SEASON_NAME
-          FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
-               pwc_mfg_bss_buyer_h pwcmfgbssbuyerh,
-               PWC_MFG_BSS_SEASON_D SeasonDetailEO
-         WHERE     StyleLineEO.STYLE_IDENTIFIER = mmc.STYLE_NAME
-               AND SeasonDetailEO.SEASON_IDENTIFIER = mmc.SEASON
-               AND pwcmfgbssbuyerh.BUYER_ID = HCA.CUST_ACCOUNT_ID
-               -- AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID
-               AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-               AND SeasonDetailEO.LINE_ID = StyleLineEO.LINE_ID
-               AND ROWNUM = 1)
-          CURRENT_SEASON
-  FROM oe_order_headers_all ooha,
-       Oe_Order_Lines_All oola,
-       MNJ_MFG_ISSUE_TO_FINISH_H mmc,
-       MNJ_MFG_ISSUE_TO_FINISH_L mmcl,
-       wip.wip_discrete_jobs wdj,
-       wip.wip_entities we,          --added by Maksudur Rahman on 17/Oct/2019
-       MNJ_MFG_RATIOPLAN rrp,
-       MNJ_MFG_RATIOPLAN_BPOS_ALL he,
-       MNJ_MFG_RATIOPLAN_STNS_ALL bb,
-       hz_parties hp,
-       mtl_system_items_b msib,
-       hz_cust_accounts hca,
-       -- MNJ_COLOR_V                  MCV, commented by Abdul Ahad on 17/July/2019
-       (  SELECT MAX (H.DOC_DATE) PRODUCTION_DATE,
-                 LL.LINE_NO,
-                 LL.SALE_ORDER_ID,
-                 SUM (NVL (LL.DAY_PRODUCTION, 0)) TOTAL_DAY_PRODUCTION,
-                 SUM (NVL (LL.DAY_REJECTION, 0)) TOTAL_DAY_REJECTION
-            FROM MNJ_MFG_FINISH_PROD_H H, MNJ_MFG_FINISH_PROD_L LL
-           WHERE H.HEADER_ID = LL.HEADER_ID
-        GROUP BY LL.LINE_NO, LL.SALE_ORDER_ID) ST
- WHERE     1 = 1
-       AND HE.SALE_ORDER_ID = OOHA.HEADER_ID
-       AND RRP.RATIOPLAN_ID = HE.RATIOPLAN_ID
-       AND HE.SALE_ORDER_ID = OOHA.HEADER_ID
-       AND HCA.CUST_ACCOUNT_ID = OOHA.SOLD_TO_ORG_ID
-       AND OOHA.HEADER_ID = OOLA.HEADER_ID
-       AND MMC.HEADER_ID = MMCL.HEADER_ID
-       AND HCA.CUST_ACCOUNT_ID = MMC.BUYER_ID
-       AND BB.STN_NO = OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER
-       AND OOHA.CUST_PO_NUMBER =
-              SUBSTR (BB.STN_NO, 0, INSTR (BB.STN_NO, '/') - 1)
-       --AND WDJ.ATTRIBUTE2 = BB.ITEM_DESCRIPTION || '-' || rrp.SEASON --Added By Ahad on 120220
-       AND UPPER (wdj.attribute6) = UPPER (rrp.style)
-       AND UPPER (wdj.attribute7) = UPPER (rrp.season)
-       AND UPPER (wdj.attribute8) = UPPER (rrp.color)
-       AND UPPER (wdj.ATTRIBUTE9) = UPPER (rrp.WASH) --Added By Ahad on 120220
-       --AND WDJ.ATTRIBUTE1 = BB.RATIOPLAN_ID
-       AND WDJ.CLASS_CODE = 'FIN'
-       AND wdj.wip_entity_id = we.wip_entity_id --added by Maksudur Rahman on 17/Oct/2019
-       AND MSIB.ORGANIZATION_ID = 353
-       AND MSIB.INVENTORY_ITEM_ID = OOLA.INVENTORY_ITEM_ID
-       AND HP.PARTY_ID = HCA.PARTY_ID
-       AND OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER = MMCL.ATTRIBUTE2
-       AND ST.SALE_ORDER_ID(+) = OOHA.HEADER_ID
-       AND ST.LINE_NO(+) = MMC.LINE_NO
-       AND UPPER (rrp.color) = UPPER (mmcl.attribute3)
-       --AND MCV.FLEX_VALUE           = MSIB.SEGMENT4 commented by Abdul Ahad on 17/July/2019
-       AND (SELECT          --DISTINCT commented by Abdul Ahad on 17/July/2019
-                   mmoda.final_mfg_org_id
-              FROM mnj_mfg_osp_dep_assign mmoda,
-                   mnj_mfg_osp_stn_line mmosl,
-                   MNJ_MFG_RATIOPLAN_STNS_ALL mmrsa
-             WHERE     mmoda.stn_line_id = mmosl.stn_line_id
-                   AND MMOSL.STN = mmrsa.STN_NO
-                   AND WDJ.attribute3 = mmrsa.ratioplan_id
-                   AND mmoda.final_mfg_org_id = mmc.org_id --addded 31-Oct-2018 by sakibul_islam for production org
-                   AND UPPER (MMODA.FINAL_DEPARTMENT) = 'FINISHING'
-                   AND ROWNUM = 1) = :p_Org_Id]]>
+    <![CDATA[SELECT ST.PRODUCTION_DATE,
+b.bpo bpo_no,
+ooha.poc_id header_id,
+ooha.LC_UNIT org_id,
+ooha.style style_name,
+ooha.season,
+hca.CUST_ACCOUNT_ID,
+ooha.BUYER_ID,
+hp.known_as,
+b.BPO stn_no,
+bb.inventory_item_id,
+wdj.WIP_ENTITY_ID,
+we.WIP_ENTITY_NAME,
+oola.color,
+mmc.line_no,
+mmcl.quantity,
+NVL (TOTAL_DAY_PRODUCTION, 0) bel_qty,
+NVL (TOTAL_DAY_rejection, 0) rejection_total,
+NVL (mmcl.quantity, 0)
+- NVL (TOTAL_DAY_PRODUCTION, 0)
+- NVL (TOTAL_DAY_rejection, 0)
+wip_qty,
+XX_FINDFINISHPRODLASTSAM (B.bpo_id) SAM,
+b.bpo_id
+FROM xx_om_poc_h_t ooha,
+xx_om_poc_l_t oola,
+XX_OM_BPO_INFO_T B,
+MNJ_MFG_ISSUE_TO_FINISH_H mmc,
+MNJ_MFG_ISSUE_TO_FINISH_L mmcl,
+wip.wip_discrete_jobs wdj,
+wip.wip_entities we,
+MNJ_MFG_RATIOPLAN rrp,
+MNJ_MFG_RATIOPLAN_STNS_ALL bb,
+hz_parties hp,
+mtl_system_items_b msib,
+hz_cust_accounts hca,
+(SELECT MAX (H.DOC_DATE) PRODUCTION_DATE,
+LL.LINE_NO,
+LL.BPO_ID,
+SUM (NVL (LL.DAY_PRODUCTION, 0)) TOTAL_DAY_PRODUCTION,
+SUM (NVL (LL.DAY_REJECTION, 0)) TOTAL_DAY_REJECTION
+FROM MNJ_MFG_FINISH_PROD_H H, MNJ_MFG_FINISH_PROD_L LL
+WHERE H.HEADER_ID = LL.HEADER_ID
+GROUP BY LL.LINE_NO, LL.BPO_ID) ST
+WHERE 1 = 1
+--AND OOHA.POC_ID = 4225
+AND HCA.CUST_ACCOUNT_ID = OOHA.BUYER_ID
+AND OOHA.POC_ID = OOLA.POC_ID
+AND OOLA.FOB_ID = B.FOB_ID
+AND MMC.HEADER_ID = MMCL.HEADER_ID
+AND HCA.CUST_ACCOUNT_ID = OOHA.BUYER_ID
+AND BB.BPO_ID = B.BPO_ID
+AND RRP.RATIOPLAN_ID = BB.RATIOPLAN_ID
+AND wdj.ATTRIBUTE10 = TO_CHAR (rrp.SYSTEM_ID)
+AND WDJ.CLASS_CODE = 'FIN'
+AND wdj.wip_entity_id = we.wip_entity_id
+AND MSIB.ORGANIZATION_ID = 353
+AND MSIB.INVENTORY_ITEM_ID = BB.INVENTORY_ITEM_ID
+AND HP.PARTY_ID = HCA.PARTY_ID
+AND B.BPO_ID = MMCL.BPO_ID
+AND ST.BPO_ID(+) = B.BPO_ID
+AND ST.LINE_NO(+) = MMC.LINE_NO
+AND (SELECT mmoda.final_mfg_org_id
+FROM mnj_mfg_osp_dep_assign mmoda,
+mnj_mfg_osp_stn_line mmosl,
+MNJ_MFG_RATIOPLAN_STNS_ALL mmrsa
+WHERE mmoda.stn_line_id = mmosl.stn_line_id
+AND MMOSL.bpo_id = mmrsa.bpo_id
+--AND WDJ.attribute3 = mmrsa.ratioplan_id
+AND mmoda.final_mfg_org_id = mmc.org_id
+AND UPPER (MMODA.FINAL_DEPARTMENT) = 'FINISHING'
+AND ROWNUM = 1) = :p_Org_Id]]>
   </SQLQuery>
   <ViewAttribute
     Name="ProductionDate"
@@ -478,6 +412,21 @@ SELECT ST.PRODUCTION_DATE,
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
+    Name="BpoId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BPO_ID"
+    Expression="BPO_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
     Name="Wash"
     IsUpdateable="false"
     IsPersistent="false"
@@ -486,7 +435,6 @@ SELECT ST.PRODUCTION_DATE,
     Type="java.lang.String"
     ColumnType="VARCHAR2"
     AliasName="WASH"
-    Expression="WASH"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="250"/>
@@ -501,7 +449,6 @@ SELECT ST.PRODUCTION_DATE,
     Type="java.lang.String"
     ColumnType="VARCHAR2"
     AliasName="CURRENT_STYLE"
-    Expression="CURRENT_STYLE"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="250"/>
@@ -516,7 +463,6 @@ SELECT ST.PRODUCTION_DATE,
     Type="java.lang.String"
     ColumnType="VARCHAR2"
     AliasName="CURRENT_SEASON"
-    Expression="CURRENT_SEASON"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="250"/>

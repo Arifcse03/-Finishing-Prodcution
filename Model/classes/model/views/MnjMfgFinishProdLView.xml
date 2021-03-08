@@ -89,76 +89,95 @@
       Hint="showAndExecute"/>
   </ListBinding>
   <SQLQuery>
-    <![CDATA[SELECT MnjMfgFinishProdL.LINE_ID, 
-       MnjMfgFinishProdL.HEADER_ID, 
-       MnjMfgFinishProdL.LINE_NO, 
-       MnjMfgFinishProdL.BUYER_ID, 
-       MnjMfgFinishProdL.STYLE, 
-       MnjMfgFinishProdL.SEASON, 
-       MnjMfgFinishProdL.BPO_NO, 
-       MnjMfgFinishProdL.STN_NO, 
-       MnjMfgFinishProdL.SALE_ORDER_ID, 
-       MnjMfgFinishProdL.DAY_REJ, 
-       MnjMfgFinishProdL.TOTAL_REJ, 
+    <![CDATA[/* Formatted on 3/8/2021 2:38:18 PM (QP5 v5.256.13226.35510) */
+SELECT MnjMfgFinishProdL.LINE_ID,
+       MnjMfgFinishProdL.HEADER_ID,
+       MnjMfgFinishProdL.LINE_NO,
+       MnjMfgFinishProdL.BUYER_ID,
+       MnjMfgFinishProdL.STYLE,
+       MnjMfgFinishProdL.SEASON,
+       MnjMfgFinishProdL.BPO_NO,
+       MnjMfgFinishProdL.STN_NO,
+       MnjMfgFinishProdL.SALE_ORDER_ID,
+       MnjMfgFinishProdL.DAY_REJ,
+       MnjMfgFinishProdL.TOTAL_REJ,
        MnjMfgFinishProdL.REMARKS,
        MnjMfgFinishProdL.INVENTORY_ITEM_ID,
        MnjMfgFinishProdL.PROD_TYPE,
-       (select ac.customer_name
-       from ar_customers ac
-       where ac.CUSTOMER_ID = MnjMfgFinishProdL.buyer_id ) buyer_name,
-MnjMfgFinishProdL.Job_Id,
+       (SELECT ac.customer_name
+          FROM ar_customers ac
+         WHERE ac.CUSTOMER_ID = MnjMfgFinishProdL.buyer_id)
+          buyer_name,
+       MnjMfgFinishProdL.Job_Id,
        MnjMfgFinishProdL.Error_Message,
        MnjMfgFinishProdL.Last_Action,
-MnjMfgFinishProdL.Division_Id,
-MnjMfgFinishProdL.Color,
-MnjMfgFinishProdL.WASH,
-MnjMfgFinishProdL.Total_Input,
-MnjMfgFinishProdL.Day_Production,
-MnjMfgFinishProdL.SAM_VALUE,
-MnjMfgFinishProdL.PRODUCED_MIN,
-MnjMfgFinishProdL.Total_Rejection,
-MnjMfgFinishProdL.Day_Rejection,
-MnjMfgFinishProdL.Wip,
-MnjMfgFinishProdL.Producty_Type,
-MnjMfgFinishProdL.Total_Production,
-MnjMfgFinishProdL.Pre_Lineoutput,
-MnjMfgFinishProdL.Bel_Lineoutout,
-MnjMfgFinishProdL.Working_Hour_Basic,
-MnjMfgFinishProdL.Manpower_Basic,
-MnjMfgFinishProdL.Working_Hour_Overtime,
-MnjMfgFinishProdL.Manpower_Overtime,
-MnjMfgFinishProdL.Working_Hour_Extraot_1,
-MnjMfgFinishProdL.Man_Power_Extraot_1,
-MnjMfgFinishProdL.Working_Hour_Extraot_2,
-MnjMfgFinishProdL.Man_Power_Extraot_2,
-MnjMfgFinishProdL.SAM,
-(SELECT DECODE(StyleLineEO.TRACK_BASIS,'Style Name',StyleLineEO.STYLE_NAME,'Style Number',StyleLineEO.STYLE_NUMBER)
-       FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
-            pwc_mfg_bss_buyer_h pwcmfgbssbuyerh       
-       WHERE StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdL.STYLE
-       AND   pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdL.BUYER_ID
-       --AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID  
-       AND   StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-       AND   rownum = 1) CURRENT_STYLE,
+       MnjMfgFinishProdL.Division_Id,
+       MnjMfgFinishProdL.Color,
+       MnjMfgFinishProdL.WASH,
+       MnjMfgFinishProdL.Total_Input,
+       MnjMfgFinishProdL.Day_Production,
+       MnjMfgFinishProdL.SAM_VALUE,
+       MnjMfgFinishProdL.PRODUCED_MIN,
+       MnjMfgFinishProdL.Total_Rejection,
+       MnjMfgFinishProdL.Day_Rejection,
+       MnjMfgFinishProdL.Wip,
+       MnjMfgFinishProdL.Producty_Type,
+       MnjMfgFinishProdL.Total_Production,
+       MnjMfgFinishProdL.Pre_Lineoutput,
+       MnjMfgFinishProdL.Bel_Lineoutout,
+       MnjMfgFinishProdL.Working_Hour_Basic,
+       MnjMfgFinishProdL.Manpower_Basic,
+       MnjMfgFinishProdL.Working_Hour_Overtime,
+       MnjMfgFinishProdL.Manpower_Overtime,
+       MnjMfgFinishProdL.Working_Hour_Extraot_1,
+       MnjMfgFinishProdL.Man_Power_Extraot_1,
+       MnjMfgFinishProdL.Working_Hour_Extraot_2,
+       MnjMfgFinishProdL.Man_Power_Extraot_2,
+       MnjMfgFinishProdL.SAM,
+       (SELECT DECODE (StyleLineEO.TRACK_BASIS,
+                       'Style Name', StyleLineEO.STYLE_NAME,
+                       'Style Number', StyleLineEO.STYLE_NUMBER)
+          FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
+               pwc_mfg_bss_buyer_h pwcmfgbssbuyerh
+         WHERE     StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdL.STYLE
+               AND pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdL.BUYER_ID
+               --AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID
+               AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
+               AND ROWNUM = 1)
+          CURRENT_STYLE,
        (SELECT SeasonDetailEO.SEASON_NAME
-       FROM PWC_MFG_BSS_STYLE_L  StyleLineEO,
-            pwc_mfg_bss_buyer_h  pwcmfgbssbuyerh,
-            PWC_MFG_BSS_SEASON_D SeasonDetailEO   
-       WHERE StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdL.STYLE
-AND   SeasonDetailEO.SEASON_IDENTIFIER = MnjMfgFinishProdL.SEASON
-       AND   pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdL.BUYER_ID
-      -- AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID 
-       AND   StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-       AND   SeasonDetailEO.LINE_ID = StyleLineEO.LINE_ID 
-       AND   rownum = 1) CURRENT_SEASON,
-       
- MnjMfgFinishProdL.CREATED_BY,   
- MnjMfgFinishProdL.CREATION_DATE,   
- MnjMfgFinishProdL.LAST_UPDATED_BY,   
- MnjMfgFinishProdL.LAST_UPDATE_DATE
-       
-       
-FROM MNJ_MFG_FINISH_PROD_L MnjMfgFinishProdL]]>
+          FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
+               pwc_mfg_bss_buyer_h pwcmfgbssbuyerh,
+               PWC_MFG_BSS_SEASON_D SeasonDetailEO
+         WHERE     StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdL.STYLE
+               AND SeasonDetailEO.SEASON_IDENTIFIER =
+                      MnjMfgFinishProdL.SEASON
+               AND pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdL.BUYER_ID
+               -- AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID
+               AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
+               AND SeasonDetailEO.LINE_ID = StyleLineEO.LINE_ID
+               AND ROWNUM = 1)
+          CURRENT_SEASON,
+       MnjMfgFinishProdL.CREATED_BY,
+       MnjMfgFinishProdL.CREATION_DATE,
+       MnjMfgFinishProdL.LAST_UPDATED_BY,
+       MnjMfgFinishProdL.LAST_UPDATE_DATE,
+       MnjMfgFinishProdL.BPO_ID,
+       MnjMfgFinishProdL.SYSTEM_ID,
+       ac.CUSTOMER_NAME BUyer_New,
+       ph.Style Style_New,
+       ph.season Season_New,
+       pl.color Color_new,
+       pl.wash_name Wash_new
+  FROM MNJ_MFG_FINISH_PROD_L MnjMfgFinishProdL,
+       xx_om_poc_h_t ph,
+       xx_om_poc_l_t pl,
+       XX_OM_BPO_INFO_T bpo,
+       ar_customers ac
+ WHERE     MnjMfgFinishProdL.bpo_id = bpo.bpo_id
+       AND bpo.fob_id = pl.fob_id
+       AND pl.poc_id = ph.poc_id
+       AND ph.BUYER_ID = ac.CUSTOMER_ID]]>
   </SQLQuery>
   <EntityUsage
     Name="MnjMfgFinishProdL"
@@ -488,6 +507,93 @@ FROM MNJ_MFG_FINISH_PROD_L MnjMfgFinishProdL]]>
     EntityAttrName="LastUpdateDate"
     EntityUsage="MnjMfgFinishProdL"
     AliasName="LAST_UPDATE_DATE"/>
+  <ViewAttribute
+    Name="BpoId"
+    PrecisionRule="true"
+    EntityAttrName="BpoId"
+    EntityUsage="MnjMfgFinishProdL"
+    AliasName="BPO_ID"/>
+  <ViewAttribute
+    Name="SystemId"
+    PrecisionRule="true"
+    EntityAttrName="SystemId"
+    EntityUsage="MnjMfgFinishProdL"
+    AliasName="SYSTEM_ID"/>
+  <ViewAttribute
+    Name="BuyerNew"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BUYER_NEW"
+    Expression="BUYER_NEW"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StyleNew"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STYLE_NEW"
+    Expression="STYLE_NEW"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SeasonNew"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SEASON_NEW"
+    Expression="SEASON_NEW"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ColorNew"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COLOR_NEW"
+    Expression="COLOR_NEW"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="WashNew"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="WASH_NEW"
+    Expression="WASH_NEW"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="SizeQty_D"
     IsUpdateable="false"

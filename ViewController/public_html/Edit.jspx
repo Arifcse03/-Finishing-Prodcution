@@ -195,16 +195,6 @@
                       <f:validator binding="#{row.bindings.BpoNo.validator}"/>
                     </af:inputText>
                   </af:column>
-                  <af:column headerText="Current Style" id="c92"
-                             sortProperty="CurrentStyle" sortable="true"
-                             filterable="true" align="center">
-                    <af:outputText value="#{row.CurrentStyle}" id="ot28"/>
-                  </af:column>
-                  <af:column headerText="Current Season" id="c93" align="center"
-                             sortable="true" filterable="true"
-                             sortProperty="CurrentSeason">
-                    <af:outputText value="#{row.CurrentSeason}" id="ot29"/>
-                  </af:column>
                   <af:column sortProperty="StnNo" filterable="true"
                              sortable="true" headerText="STN No." id="c11"
                              align="center" width="200">
@@ -763,55 +753,25 @@
                                             pattern="#{bindings.MnjMfgFinishProdLView1.hints.BuyerId.format}"/>
                         </af:outputText>
                       </af:column>
-                      <af:column headerText="Buyer Name" id="c23" align="center"
-                                 sortable="true" sortProperty="BuyerName"
-                                 filterable="true">
-                        <af:inputText value="#{row.bindings.BuyerName.inputValue}"
-                                      label="#{bindings.MnjMfgFinishProdLView1.hints.BuyerName.label}"
-                                      required="#{bindings.MnjMfgFinishProdLView1.hints.BuyerName.mandatory}"
-                                      columns="#{bindings.MnjMfgFinishProdLView1.hints.BuyerName.displayWidth}"
-                                      maximumLength="#{bindings.MnjMfgFinishProdLView1.hints.BuyerName.precision}"
-                                      shortDesc="#{bindings.MnjMfgFinishProdLView1.hints.BuyerName.tooltip}"
-                                      id="it24" readOnly="true">
-                          <f:validator binding="#{row.bindings.BuyerName.validator}"/>
-                        </af:inputText>
+                      <af:column headerText="Buyer"
+                                 id="c103" align="center" sortable="true"
+                                 filterable="true" sortProperty="BuyerNew">
+                        <af:outputText value="#{row.BuyerNew}" id="ot34"/>
                       </af:column>
-                      <af:column sortProperty="Style" filterable="true"
-                                 sortable="true" headerText="Style " id="c5"
-                                 width="106" align="center">
-                        <af:inputText value="#{row.bindings.Style.inputValue}"
-                                      label="#{bindings.MnjMfgFinishProdLView1.hints.Style.label}"
-                                      required="#{bindings.MnjMfgFinishProdLView1.hints.Style.mandatory}"
-                                      columns="#{bindings.MnjMfgFinishProdLView1.hints.Style.displayWidth}"
-                                      maximumLength="#{bindings.MnjMfgFinishProdLView1.hints.Style.precision}"
-                                      shortDesc="#{bindings.MnjMfgFinishProdLView1.hints.Style.tooltip}"
-                                      id="it8" readOnly="true">
-                          <f:validator binding="#{row.bindings.Style.validator}"/>
-                        </af:inputText>
+                      <af:column headerText="Style"
+                                 id="c104" align="center" sortable="true"
+                                 filterable="true" sortProperty="StyleNew">
+                        <af:outputText value="#{row.StyleNew}" id="ot35"/>
                       </af:column>
-                      <af:column sortProperty="Season" filterable="true"
-                                 sortable="true" headerText="Season/ lot"
-                                 id="c3" width="104" align="center">
-                        <af:inputText value="#{row.bindings.Season.inputValue}"
-                                      label="#{bindings.MnjMfgFinishProdLView1.hints.Season.label}"
-                                      required="#{bindings.MnjMfgFinishProdLView1.hints.Season.mandatory}"
-                                      columns="#{bindings.MnjMfgFinishProdLView1.hints.Season.displayWidth}"
-                                      maximumLength="#{bindings.MnjMfgFinishProdLView1.hints.Season.precision}"
-                                      shortDesc="#{bindings.MnjMfgFinishProdLView1.hints.Season.tooltip}"
-                                      id="it11" readOnly="true">
-                          <f:validator binding="#{row.bindings.Season.validator}"/>
-                        </af:inputText>
+                      <af:column headerText="Season/Lot"
+                                 id="c105" align="center" sortable="true"
+                                 filterable="true" sortProperty="SeasonNew">
+                        <af:outputText value="#{row.SeasonNew}" id="ot36"/>
                       </af:column>
-                      <af:column headerText="Color" id="c29" align="center">
-                        <af:inputText value="#{row.bindings.Color.inputValue}"
-                                      label="#{bindings.MnjMfgFinishProdLView1.hints.Color.label}"
-                                      required="#{bindings.MnjMfgFinishProdLView1.hints.Color.mandatory}"
-                                      columns="#{bindings.MnjMfgFinishProdLView1.hints.Color.displayWidth}"
-                                      maximumLength="#{bindings.MnjMfgFinishProdLView1.hints.Color.precision}"
-                                      shortDesc="#{bindings.MnjMfgFinishProdLView1.hints.Color.tooltip}"
-                                      id="it29" readOnly="true">
-                          <f:validator binding="#{row.bindings.Color.validator}"/>
-                        </af:inputText>
+                      <af:column headerText="Color"
+                                 id="c106" align="center" sortable="true"
+                                 filterable="true" sortProperty="ColorNew">
+                        <af:outputText value="#{row.ColorNew}" id="ot37"/>
                       </af:column>
                       <af:column headerText="Total Input" id="c30"
                                  align="center" width="70">
@@ -1027,17 +987,20 @@
                       </af:column>
                       <af:column headerText="Wash" id="c96" rendered="true"
                                  align="center" sortable="true"
-                                 filterable="true" sortProperty="Wash">
+                                 filterable="true" sortProperty="Wash"
+                                 visible="false">
                         <af:outputText value="#{row.Wash}" id="ot32"/>
                       </af:column>
                       <af:column headerText="Current Style" id="c24"
                                  align="center" sortable="true"
-                                 filterable="true" sortProperty="CurrentStyle">
+                                 filterable="true" sortProperty="CurrentStyle"
+                                 visible="false">
                         <af:outputText value="#{row.CurrentStyle}" id="ot24"/>
                       </af:column>
                       <af:column headerText="Current Season" id="c89"
                                  sortProperty="CurrentSeason" sortable="true"
-                                 filterable="true" align="center">
+                                 filterable="true" align="center"
+                                 visible="false">
                         <af:outputText value="#{row.CurrentSeason}" id="ot25"/>
                       </af:column>
                       <af:column headerText="Production Type" id="c88"
@@ -1091,7 +1054,7 @@
                       </af:column>
                       <af:column sortProperty="StnNo" filterable="true"
                                  sortable="true" headerText="STN No." id="c4"
-                                 width="200" align="center">
+                                 width="200" align="center" visible="false">
                         <af:inputText value="#{row.bindings.StnNo.inputValue}"
                                       label="#{bindings.MnjMfgFinishProdLView1.hints.StnNo.label}"
                                       required="#{bindings.MnjMfgFinishProdLView1.hints.StnNo.mandatory}"
@@ -1101,6 +1064,14 @@
                                       id="it6" readOnly="true">
                           <f:validator binding="#{row.bindings.StnNo.validator}"/>
                         </af:inputText>
+                      </af:column>
+                      <af:column headerText="BPO Id"
+                                 id="c92" align="center" sortable="true"
+                                 filterable="true" sortProperty="BpoId">
+                        <af:outputText value="#{row.BpoId}" id="ot28">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.MnjMfgFinishProdLView1.hints.BpoId.format}"/>
+                        </af:outputText>
                       </af:column>
                       <af:column headerText="Job Name" id="c42" align="center"
                                  width="200">

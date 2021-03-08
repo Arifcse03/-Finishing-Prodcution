@@ -151,23 +151,23 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
     public void populateLines(Row poprow) {
 
         Row linerow = createLine();
-        linerow.setAttribute("BuyerId",
-                             getPopulateValue(poprow, "CustAccountId"));
+        //linerow.setAttribute("BuyerId",
+                            // getPopulateValue(poprow, "CustAccountId"));
 
-        linerow.setAttribute("BuyerName", getPopulateValue(poprow, "KnownAs"));
+       // linerow.setAttribute("BuyerName", getPopulateValue(poprow, "KnownAs"));
         linerow.setAttribute("BpoNo", getPopulateValue(poprow, "BpoNo"));
         linerow.setAttribute("SaleOrderId",
                              getPopulateValue(poprow, "HeaderId")); //DcpoNo
-        linerow.setAttribute("Style", getPopulateValue(poprow, "StyleName"));
-        linerow.setAttribute("Season", getPopulateValue(poprow, "Season"));
-        linerow.setAttribute("StnNo", getPopulateValue(poprow, "StnNo"));
+      //  linerow.setAttribute("Style", getPopulateValue(poprow, "StyleName"));
+        //linerow.setAttribute("Season", getPopulateValue(poprow, "Season"));
+        linerow.setAttribute("BpoId", getPopulateValue(poprow, "BpoId"));
         linerow.setAttribute("LineNo", getPopulateValue(poprow, "LineNo"));
         linerow.setAttribute("InventoryItemId",
                              getPopulateValue(poprow, "InventoryItemId"));
         linerow.setAttribute("JobId", getPopulateValue(poprow, "WipEntityId"));
         linerow.setAttribute("DivisionId", getPopulateValue(poprow, "OrgId"));
-        linerow.setAttribute("Color", getPopulateValue(poprow, "Color"));
-        linerow.setAttribute("Wash", getPopulateValue(poprow, "Wash"));
+       // linerow.setAttribute("Color", getPopulateValue(poprow, "Color"));
+      //  linerow.setAttribute("Wash", getPopulateValue(poprow, "Wash"));
         
         linerow.setAttribute("ProductyType",
                              getPopulateValue(poprow, "WipEntityName"));
@@ -180,8 +180,8 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
         linerow.setAttribute("Wip", getPopulateValue(poprow, "WipQty"));
         //linerow.setAttribute("Sam", getPopulateValue(poprow, "Sam"));
         linerow.setAttribute("SamValue", getPopulateValue(poprow, "Sam"));
-        linerow.setAttribute("CurrentStyle", getPopulateValue(poprow, "CurrentStyle"));
-        linerow.setAttribute("CurrentSeason", getPopulateValue(poprow, "CurrentSeason"));
+        //linerow.setAttribute("CurrentStyle", getPopulateValue(poprow, "CurrentStyle"));
+       // linerow.setAttribute("CurrentSeason", getPopulateValue(poprow, "CurrentSeason"));
 
 
     } //end of populateLines
