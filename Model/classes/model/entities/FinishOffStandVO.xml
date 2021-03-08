@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="FinishOffStandVO"
+  Version="11.1.1.62.29"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="FinishingLineLOV1"
+    ViewObjectName="model.lov.FinishingLineLOV"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_StitchingLine"
+    ListVOName="FinishingLineLOV1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_StitchingLine_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StitchingLine"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Description"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Description"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT MnjMfgFinishOffStand.LINE_ID, 
+       MnjMfgFinishOffStand.HEADER_ID, 
+       MnjMfgFinishOffStand.STITCHING_LINE, 
+       MnjMfgFinishOffStand.TOTAL_STANDAD, 
+       MnjMfgFinishOffStand.REMARKS, 
+       MnjMfgFinishOffStand.ATTRIBUTE1, 
+       MnjMfgFinishOffStand.ATTRIBUTE2, 
+       MnjMfgFinishOffStand.ATTRIBUTE3, 
+       MnjMfgFinishOffStand.ATTRIBUTE4, 
+       MnjMfgFinishOffStand.ATTRIBUTE5, 
+       MnjMfgFinishOffStand.CREATED_BY, 
+       MnjMfgFinishOffStand.CREATION_DATE,
+       MnjMfgFinishOffStand.LAST_UPDATED_BY, 
+       MnjMfgFinishOffStand.LAST_UPDATE_DATE
+       
+FROM MNJ_MFG_FINISH_OFF_STAND MnjMfgFinishOffStand]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="MnjMfgFinishOffStand"
+    Entity="model.entities.MnjMfgFinishOffStand"/>
+  <ViewAttribute
+    Name="LineId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LineId"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="LINE_ID"/>
+  <ViewAttribute
+    Name="HeaderId"
+    PrecisionRule="true"
+    EntityAttrName="HeaderId"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="HEADER_ID"/>
+  <ViewAttribute
+    Name="StitchingLine"
+    PrecisionRule="true"
+    EntityAttrName="StitchingLine"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="STITCHING_LINE"
+    LOVName="LOV_StitchingLine">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TotalStandad"
+    PrecisionRule="true"
+    EntityAttrName="TotalStandad"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="TOTAL_STANDAD"/>
+  <ViewAttribute
+    Name="Remarks"
+    PrecisionRule="true"
+    EntityAttrName="Remarks"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="REMARKS"/>
+  <ViewAttribute
+    Name="Attribute1"
+    PrecisionRule="true"
+    EntityAttrName="Attribute1"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="ATTRIBUTE1"/>
+  <ViewAttribute
+    Name="Attribute2"
+    PrecisionRule="true"
+    EntityAttrName="Attribute2"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="ATTRIBUTE2"/>
+  <ViewAttribute
+    Name="Attribute3"
+    PrecisionRule="true"
+    EntityAttrName="Attribute3"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="ATTRIBUTE3"/>
+  <ViewAttribute
+    Name="Attribute4"
+    PrecisionRule="true"
+    EntityAttrName="Attribute4"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="ATTRIBUTE4"/>
+  <ViewAttribute
+    Name="Attribute5"
+    PrecisionRule="true"
+    EntityAttrName="Attribute5"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="ATTRIBUTE5"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="CREATION_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdateDate"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdateDate"
+    EntityUsage="MnjMfgFinishOffStand"
+    AliasName="LAST_UPDATE_DATE"/>
+  <ViewLinkAccessor
+    Name="FinishOffStandLVO"
+    ViewLink="model.views.HeaderLineOffStandardVL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+</ViewObject>

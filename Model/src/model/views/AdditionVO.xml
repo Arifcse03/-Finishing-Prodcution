@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AdditionVO"
+  Version="11.1.1.62.29"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <SQLQuery>
+    <![CDATA[SELECT MnjMfgFinishProdAddition.ADDITION_ID, 
+       MnjMfgFinishProdAddition.HEADER_ID, 
+       MnjMfgFinishProdAddition.LINE_NO, 
+       MnjMfgFinishProdAddition.BUYER_ID, 
+       MnjMfgFinishProdAddition.STYLE, 
+       MnjMfgFinishProdAddition.SEASON, 
+       MnjMfgFinishProdAddition.COLOR,
+       MnjMfgFinishProdAddition.WAH, 
+       MnjMfgFinishProdAddition.WORKING_HOUR_BASIC, 
+       MnjMfgFinishProdAddition.MANPOWER_BASIC, 
+       MnjMfgFinishProdAddition.WORKING_HOUR_OVERTIME, 
+       MnjMfgFinishProdAddition.MANPOWER_OVERTIME, 
+       MnjMfgFinishProdAddition.WORKING_HOUR_EXTRAOT_1, 
+       MnjMfgFinishProdAddition.MAN_POWER_EXTRAOT_1, 
+       MnjMfgFinishProdAddition.WORKING_HOUR_EXTRAOT_2, 
+       MnjMfgFinishProdAddition.MAN_POWER_EXTRAOT_2,
+MnjMfgFinishProdAddition.BUYER,
+MnjMfgFinishProdAddition.REMARKS,
+(SELECT DECODE(StyleLineEO.TRACK_BASIS,'Style Name',StyleLineEO.STYLE_NAME,'Style Number',StyleLineEO.STYLE_NUMBER)
+       FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
+            pwc_mfg_bss_buyer_h pwcmfgbssbuyerh       
+       WHERE StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdAddition.STYLE
+       AND   pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdAddition.BUYER_ID
+       --AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID  
+       AND   StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
+       AND   rownum = 1) CURRENT_STYLE,
+       (SELECT SeasonDetailEO.SEASON_NAME
+       FROM PWC_MFG_BSS_STYLE_L  StyleLineEO,
+            pwc_mfg_bss_buyer_h  pwcmfgbssbuyerh,
+            PWC_MFG_BSS_SEASON_D SeasonDetailEO   
+       WHERE StyleLineEO.STYLE_IDENTIFIER = MnjMfgFinishProdAddition.STYLE
+AND   SeasonDetailEO.SEASON_IDENTIFIER = MnjMfgFinishProdAddition.SEASON
+       AND   pwcmfgbssbuyerh.BUYER_ID = MnjMfgFinishProdAddition.BUYER_ID
+      -- AND   pwcmfgbssbuyerh.ORG_ID = MnjMfgRoutingPlan.DIVISION_ID 
+       AND   StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
+       AND   SeasonDetailEO.LINE_ID = StyleLineEO.LINE_ID 
+       AND   rownum = 1) CURRENT_SEASON,
+       MnjMfgFinishProdAddition.CREATED_BY,
+       MnjMfgFinishProdAddition.CREATION_DATE,
+       MnjMfgFinishProdAddition.LAST_UPDATED_BY,
+       MnjMfgFinishProdAddition.LAST_UPDATE_DATE
+FROM MNJ_MFG_FINISH_PROD_ADDITION MnjMfgFinishProdAddition]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="MnjMfgFinishProdAddition"
+    Entity="model.entities.MnjMfgFinishProdAddition"/>
+  <ViewAttribute
+    Name="AdditionId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AdditionId"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="ADDITION_ID"/>
+  <ViewAttribute
+    Name="HeaderId"
+    PrecisionRule="true"
+    EntityAttrName="HeaderId"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="HEADER_ID"/>
+  <ViewAttribute
+    Name="LineNo"
+    PrecisionRule="true"
+    EntityAttrName="LineNo"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="LINE_NO"/>
+  <ViewAttribute
+    Name="BuyerId"
+    PrecisionRule="true"
+    EntityAttrName="BuyerId"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="BUYER_ID"/>
+  <ViewAttribute
+    Name="Style"
+    PrecisionRule="true"
+    EntityAttrName="Style"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="STYLE"/>
+  <ViewAttribute
+    Name="Season"
+    PrecisionRule="true"
+    EntityAttrName="Season"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="SEASON"/>
+  <ViewAttribute
+    Name="Color"
+    PrecisionRule="true"
+    EntityAttrName="Color"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="COLOR"/>
+  <ViewAttribute
+    Name="Wah"
+    PrecisionRule="true"
+    EntityAttrName="Wah"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="WAH"/>
+  <ViewAttribute
+    Name="WorkingHourBasic"
+    PrecisionRule="true"
+    EntityAttrName="WorkingHourBasic"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="WORKING_HOUR_BASIC"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="ManpowerBasic"
+    PrecisionRule="true"
+    EntityAttrName="ManpowerBasic"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="MANPOWER_BASIC"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="WorkingHourOvertime"
+    PrecisionRule="true"
+    EntityAttrName="WorkingHourOvertime"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="WORKING_HOUR_OVERTIME"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="ManpowerOvertime"
+    PrecisionRule="true"
+    EntityAttrName="ManpowerOvertime"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="MANPOWER_OVERTIME"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="WorkingHourExtraot1"
+    PrecisionRule="true"
+    EntityAttrName="WorkingHourExtraot1"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="WORKING_HOUR_EXTRAOT_1"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="ManPowerExtraot1"
+    PrecisionRule="true"
+    EntityAttrName="ManPowerExtraot1"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="MAN_POWER_EXTRAOT_1"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="WorkingHourExtraot2"
+    PrecisionRule="true"
+    EntityAttrName="WorkingHourExtraot2"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="WORKING_HOUR_EXTRAOT_2"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="ManPowerExtraot2"
+    PrecisionRule="true"
+    EntityAttrName="ManPowerExtraot2"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="MAN_POWER_EXTRAOT_2"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="Buyer"
+    PrecisionRule="true"
+    EntityAttrName="Buyer"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="BUYER"/>
+  <ViewAttribute
+    Name="Remarks"
+    PrecisionRule="true"
+    EntityAttrName="Remarks"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="REMARKS"/>
+  <ViewAttribute
+    Name="CurrentStyle"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="250"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_STYLE"
+    Expression="CURRENT_STYLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrentSeason"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="250"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_SEASON"
+    Expression="CURRENT_SEASON"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="CREATION_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdateDate"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdateDate"
+    EntityUsage="MnjMfgFinishProdAddition"
+    AliasName="LAST_UPDATE_DATE"/>
+</ViewObject>

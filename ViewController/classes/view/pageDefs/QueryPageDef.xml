@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="QueryPageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MnjMfgFinishProdHView1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="MnjMfgFinishProdHView1Iterator"/>
+    <searchRegion Criteria="HeaderNoSearch"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="MnjMfgFinishProdHView1Iterator"
+                  id="HeaderNoSearchQuery"/>
+    <invokeAction id="setSession" Binds="setSessionValues"
+                  Refresh="renderModel"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="MnjMfgFinishProdHView1Iterator"
+          id="MnjMfgFinishProdHView1">
+      <nodeDefinition DefName="model.views.MnjMfgFinishProdHView"
+                      Name="MnjMfgFinishProdHView10">
+        <AttrNames>
+          <Item Value="HeaderId"/>
+          <Item Value="HeaderNo"/>
+          <Item Value="DocDate"/>
+          <Item Value="Remarks"/>
+          <Item Value="OrgId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreationDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="Buyer"/>
+          <Item Value="StyleName"/>
+          <Item Value="Season"/>
+          <Item Value="Color"/>
+          <Item Value="LineNo"/>
+          <Item Value="TotalProduction"/>
+          <Item Value="TotalProducedMin"/>
+          <Item Value="TotalAttended"/>
+          <Item Value="Efficiency"/>
+          <Item Value="OffStandardMin"/>
+          <Item Value="DayRejection"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="MnjMfgFinishProdHView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="MnjMfgFinishProdHView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="AppModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="AppModuleDataControl"/>
+    <methodAction id="setSessionValues"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="setSessionValues"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="orgId" NDValue="#{viewScope.OrgId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="userId" NDValue="#{viewScope.UserId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="respId" NDValue="#{viewScope.RespId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="respAppl" NDValue="#{viewScope.RespApplId}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="EditPageDef" Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MnjMfgFinishProdHView1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="MnjMfgFinishProdHView1Iterator"/>
+    <iterator Binds="MnjMfgFinishProdLView1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="MnjMfgFinishProdLView1Iterator"/>
+    <searchRegion Binds="MnjMfgFinishProdLView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="MnjMfgFinishProdLView1Query"/>
+    <iterator Binds="MnjMfgFinishProdDView1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="MnjMfgFinishProdDView1Iterator"/>
+    <searchRegion Binds="MnjMfgFinishProdDView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="MnjMfgFinishProdDView1Query"/>
+    <iterator Binds="FillBPO1" RangeSize="25" DataControl="AppModuleDataControl"
+              id="FillBPO1Iterator"/>
+    <searchRegion Binds="FillBPO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="FillBPO1Query"/>
+    <iterator Binds="FillSizeVO1" RangeSize="25"
+              DataControl="AppModuleDataControl" id="FillSizeVO1Iterator"/>
+    <searchRegion Binds="FillSizeVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="FillSizeVO1Query"/>
+    <iterator Binds="AdditionVO1" RangeSize="25"
+              DataControl="AppModuleDataControl" id="AdditionVO1Iterator"/>
+    <searchRegion Binds="AdditionVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdditionVO1Query"/>
+    <iterator Binds="AdditionPOPVO1" RangeSize="25"
+              DataControl="AppModuleDataControl" id="AdditionPOPVO1Iterator"/>
+    <searchRegion Binds="AdditionPOPVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdditionPOPVO1Query"/>
+    <iterator Binds="FinishOffStandVO1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="FinishOffStandVO1Iterator"/>
+    <searchRegion Binds="FinishOffStandVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="FinishOffStandVO1Query"/>
+    <iterator Binds="FinishOffStandLVO1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="FinishOffStandLVO1Iterator"/>
+    <searchRegion Binds="FinishOffStandLVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="FinishOffStandLVO1Query"/>
+    <iterator Binds="CodeDesreptionVO1" RangeSize="25"
+              DataControl="AppModuleDataControl"
+              id="CodeDesreptionVO1Iterator"/>
+    <searchRegion Binds="CodeDesreptionVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CodeDesreptionVO1Query"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator" id="HeaderNo">
+      <AttrNames>
+        <Item Value="HeaderNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator" id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator" id="Remarks">
+      <AttrNames>
+        <Item Value="Remarks"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="AppModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="AppModuleDataControl"/>
+    <tree IterBinding="MnjMfgFinishProdLView1Iterator"
+          id="MnjMfgFinishProdLView1">
+      <nodeDefinition DefName="model.views.MnjMfgFinishProdLView"
+                      Name="MnjMfgFinishProdLView10">
+        <AttrNames>
+          <Item Value="LineNo"/>
+          <Item Value="BuyerId"/>
+          <Item Value="Style"/>
+          <Item Value="Season"/>
+          <Item Value="BpoNo"/>
+          <Item Value="StnNo"/>
+          <Item Value="SaleOrderId"/>
+          <Item Value="DayRej"/>
+          <Item Value="TotalRej"/>
+          <Item Value="Remarks"/>
+          <Item Value="BuyerName"/>
+          <Item Value="ProdType"/>
+          <Item Value="ErrorMessage"/>
+          <Item Value="LastAction"/>
+          <Item Value="Color"/>
+          <Item Value="TotalInput"/>
+          <Item Value="DayProduction"/>
+          <Item Value="TotalRejection"/>
+          <Item Value="TotalProduction"/>
+          <Item Value="Wip"/>
+          <Item Value="PreLineoutput"/>
+          <Item Value="BelLineoutout"/>
+          <Item Value="DayRejection"/>
+          <Item Value="ProductyType"/>
+          <Item Value="LineId"/>
+          <Item Value="WorkingHourBasic"/>
+          <Item Value="ManpowerBasic"/>
+          <Item Value="WorkingHourOvertime"/>
+          <Item Value="ManpowerOvertime"/>
+          <Item Value="WorkingHourExtraot1"/>
+          <Item Value="ManPowerExtraot1"/>
+          <Item Value="WorkingHourExtraot2"/>
+          <Item Value="ManPowerExtraot2"/>
+          <Item Value="CurrentStyle"/>
+          <Item Value="CurrentSeason"/>
+          <Item Value="Wash"/>
+          <Item Value="SamValue"/>
+          <Item Value="ProducedMin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="MnjMfgFinishProdLView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="MnjMfgFinishProdLView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="MnjMfgFinishProdDView1Iterator"
+          id="MnjMfgFinishProdDView1">
+      <nodeDefinition DefName="model.views.MnjMfgFinishProdDView"
+                      Name="MnjMfgFinishProdDView10">
+        <AttrNames>
+          <Item Value="DetailId"/>
+          <Item Value="LineId"/>
+          <Item Value="SizeValue"/>
+          <Item Value="SizeQty"/>
+          <Item Value="ProdQty"/>
+          <Item Value="BlncQty"/>
+          <Item Value="SizeWiseRej"/>
+          <Item Value="PrevProd"/>
+          <Item Value="TotalInput"/>
+          <Item Value="DayProd"/>
+          <Item Value="TotalProd"/>
+          <Item Value="DayRejection"/>
+          <Item Value="TotalRej"/>
+          <Item Value="Inseam"/>
+          <Item Value="R1"/>
+          <Item Value="R2"/>
+          <Item Value="R3"/>
+          <Item Value="R4"/>
+          <Item Value="R5"/>
+          <Item Value="R6"/>
+          <Item Value="R7"/>
+          <Item Value="R8"/>
+          <Item Value="R9"/>
+          <Item Value="R10"/>
+          <Item Value="R11"/>
+          <Item Value="R12"/>
+          <Item Value="R13"/>
+          <Item Value="SizeInseam"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="MnjMfgFinishProdDView1Iterator" id="CreateInsert1"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="MnjMfgFinishProdDView1Iterator" id="Delete1"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="FillBPO1Iterator" id="FillBPO1">
+      <nodeDefinition DefName="model.lov.FillBPO" Name="FillBPO10">
+        <AttrNames>
+          <Item Value="CustomerName"/>
+          <Item Value="BpoNo"/>
+          <Item Value="StyleName"/>
+          <Item Value="Season"/>
+          <Item Value="StnNo"/>
+          <Item Value="LineNo"/>
+          <Item Value="Flag" Binds="Flag"/>
+          <Item Value="KnownAs"/>
+          <Item Value="Colour"/>
+          <Item Value="PrevProdQty"/>
+          <Item Value="BelQty"/>
+          <Item Value="DayProduction"/>
+          <Item Value="WipQty"/>
+          <Item Value="TotalInput"/>
+          <Item Value="Color"/>
+          <Item Value="WipEntityName"/>
+          <Item Value="RejectionTotal"/>
+          <Item Value="Quantity"/>
+          <Item Value="ProductionDate"/>
+          <Item Value="CurrentStyle"/>
+          <Item Value="CurrentSeason"/>
+          <Item Value="Wash"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="FillBPO1Iterator" id="Flag" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="Flag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <methodAction id="FillLines"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="FillLines"
+                  IsViewObjectMethod="false"/>
+    <tree IterBinding="FillSizeVO1Iterator" id="FillSizeVO1">
+      <nodeDefinition DefName="model.lov.FillSizeVO" Name="FillSizeVO10">
+        <AttrNames>
+          <Item Value="InseamSizeConcat"/>
+          <Item Value="SizeQty"/>
+          <Item Value="SFlag" Binds="SFlag"/>
+          <Item Value="BelQty"/>
+          <Item Value="DayRejTotal"/>
+          <Item Value="WipQty"/>
+          <Item Value="TotalQty"/>
+          <Item Value="Inseam"/>
+          <Item Value="PrevProdQty"/>
+          <Item Value="DayRejPreQty"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="FillSizeVO1Iterator" id="SFlag" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="SFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <methodAction id="FillDetails"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="FillDetails"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator" id="HeaderId">
+      <AttrNames>
+        <Item Value="HeaderId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callPost" InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callPost"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.callPost_AppModuleDataControl_dataProvider_callPost_result">
+      <NamedData NDName="headerId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="completion"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="completion"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.completion_AppModuleDataControl_dataProvider_completion_result">
+      <NamedData NDName="headerId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="sumtotalProduction"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sumtotalProduction"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.sumtotalProduction_AppModuleDataControl_dataProvider_sumtotalProduction_result"/>
+    <methodAction id="sumtotalprodetail"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sumtotalprodetail"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.sumtotalprodetail_AppModuleDataControl_dataProvider_sumtotalprodetail_result"/>
+    <methodAction id="sumtotalRejection"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sumtotalRejection"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.sumtotalRejection_AppModuleDataControl_dataProvider_sumtotalRejection_result"/>
+    <methodAction id="sumtotalRejectiondetail"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sumtotalRejectiondetail"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.sumtotalRejectiondetail_AppModuleDataControl_dataProvider_sumtotalRejectiondetail_result"/>
+    <methodAction id="CalculateTotalProductionNewLINE"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="CalculateTotalProductionNewLINE"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.AppModuleDataControl.methodResults.CalculateTotalProductionNewLINE_AppModuleDataControl_dataProvider_CalculateTotalProductionNewLINE_result">
+      <NamedData NDName="headerId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setRollwhereClause1"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="setRollwhereClause1"
+                  IsViewObjectMethod="false"/>
+    <tree IterBinding="AdditionVO1Iterator" id="AdditionVO1">
+      <nodeDefinition DefName="model.views.AdditionVO" Name="AdditionVO10">
+        <AttrNames>
+          <Item Value="LineNo"/>
+          <Item Value="Style"/>
+          <Item Value="Season"/>
+          <Item Value="Color"/>
+          <Item Value="WorkingHourBasic"/>
+          <Item Value="ManpowerBasic"/>
+          <Item Value="WorkingHourOvertime"/>
+          <Item Value="ManpowerOvertime"/>
+          <Item Value="WorkingHourExtraot1"/>
+          <Item Value="ManPowerExtraot1"/>
+          <Item Value="WorkingHourExtraot2"/>
+          <Item Value="ManPowerExtraot2"/>
+          <Item Value="Buyer"/>
+          <Item Value="BuyerId"/>
+          <Item Value="CurrentStyle"/>
+          <Item Value="CurrentSeason"/>
+          <Item Value="Wah"/>
+          <Item Value="Remarks"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AdditionPOPVO1Iterator" id="AdditionPOPVO1">
+      <nodeDefinition DefName="model.lov.AdditionPOPVO" Name="AdditionPOPVO10">
+        <AttrNames>
+          <Item Value="Style"/>
+          <Item Value="Season"/>
+          <Item Value="BuyerName"/>
+          <Item Value="Color"/>
+          <Item Value="FlagNEW" Binds="FlagNEW"/>
+          <Item Value="LineNo"/>
+          <Item Value="CurrentStyle"/>
+          <Item Value="CurrentSeason"/>
+          <Item Value="Wash"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="AdditionPOPVO1Iterator" id="FlagNEW"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FlagNEW"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <methodAction id="FillLinesNEW"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="FillLinesNEW"
+                  IsViewObjectMethod="false"/>
+    <methodAction id="setSizeWherCaluseNew"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="setSizeWherCaluseNew"
+                  IsViewObjectMethod="false"/>
+    <action IterBinding="AdditionVO1Iterator" id="CreateInsert2"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="AdditionVO1Iterator" id="Delete2"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalAttended">
+      <AttrNames>
+        <Item Value="TotalAttended"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalProduction">
+      <AttrNames>
+        <Item Value="TotalProduction"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="FinishOffStandVO1Iterator" id="FinishOffStandVO1">
+      <nodeDefinition DefName="model.entities.FinishOffStandVO"
+                      Name="FinishOffStandVO10">
+        <AttrNames>
+          <Item Value="StitchingLine"/>
+          <Item Value="TotalStandad"/>
+          <Item Value="Remarks"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="FinishOffStandVO1Iterator" id="CreateInsert3"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="FinishOffStandVO1Iterator" id="Delete3"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="FinishOffStandLVO1Iterator" id="FinishOffStandLVO1">
+      <nodeDefinition DefName="model.views.FinishOffStandLVO"
+                      Name="FinishOffStandLVO10">
+        <AttrNames>
+          <Item Value="CodeStandard"/>
+          <Item Value="Descreption"/>
+          <Item Value="Area"/>
+          <Item Value="TotalStandad"/>
+          <Item Value="Remarks"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="FinishOffStandLVO1Iterator" id="CreateInsert4"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="FinishOffStandLVO1Iterator" id="Delete4"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="CodeDesreptionVO1Iterator" id="CodeDesreptionVO1">
+      <nodeDefinition DefName="model.lov.CodeDesreptionVO"
+                      Name="CodeDesreptionVO10">
+        <AttrNames>
+          <Item Value="FlexValue"/>
+          <Item Value="Description"/>
+          <Item Value="FlagNEWTab" Binds="FlagNEWTab"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="CodeDesreptionVO1Iterator" id="FlagNEWTab"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FlagNEWTab"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <methodAction id="FillLinesNEWTab"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="FillLinesNEWTab"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="OffStandardMin">
+      <AttrNames>
+        <Item Value="OffStandardMin"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="selectAllLines"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="selectAllLines"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="FlagNEWTab" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="Attribute1">
+      <AttrNames>
+        <Item Value="Attribute1"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="popupDeselectActionListener"
+                  InstanceName="AppModuleDataControl.dataProvider"
+                  DataControl="AppModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="popupDeselectActionListener"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalInput_L">
+      <AttrNames>
+        <Item Value="TotalInput_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="DayProduction_L">
+      <AttrNames>
+        <Item Value="DayProduction_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalProduction_L">
+      <AttrNames>
+        <Item Value="TotalProduction_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="DayRejection_L">
+      <AttrNames>
+        <Item Value="DayRejection_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalRejection_L">
+      <AttrNames>
+        <Item Value="TotalRejection_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator" id="Wip_L">
+      <AttrNames>
+        <Item Value="Wip_L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="SizeQty_D">
+      <AttrNames>
+        <Item Value="SizeQty_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="TotalInput_D">
+      <AttrNames>
+        <Item Value="TotalInput_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="DayProd_D">
+      <AttrNames>
+        <Item Value="DayProd_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="TotalProd_D">
+      <AttrNames>
+        <Item Value="TotalProd_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="DayRejection_D">
+      <AttrNames>
+        <Item Value="DayRejection_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator"
+                     id="TotalRej_D">
+      <AttrNames>
+        <Item Value="TotalRej_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdLView1Iterator" id="Wip_D">
+      <AttrNames>
+        <Item Value="Wip_D"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="Efficiency">
+      <AttrNames>
+        <Item Value="Efficiency"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MnjMfgFinishProdHView1Iterator"
+                     id="TotalProducedMin">
+      <AttrNames>
+        <Item Value="TotalProducedMin"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

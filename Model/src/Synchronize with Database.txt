@@ -1,0 +1,12 @@
+The following Synchronization Actions were performed successfully:
+
+Entity :MnjMfgFinishProdL
+  Create Attribute for column: POSTED_STATUS
+  Create Attribute for column: WORKING_HOUR_BASIC
+  Create Attribute for column: MANPOWER_BASIC
+  Create Attribute for column: WORKING_HOUR_OVERTIME
+  Create Attribute for column: MANPOWER_OVERTIME
+  Create Attribute for column: WORKING_HOUR_EXTRAOT_1
+  Create Attribute for column: MAN_POWER_EXTRAOT_1
+  Create Attribute for column: WORKING_HOUR_EXTRAOT_2
+  Create Attribute for column: MAN_POWER_EXTRAOT_2

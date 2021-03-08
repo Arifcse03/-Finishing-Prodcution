@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="MnjMfgFinishOffStandLFkAssoc"
+  Version="11.1.1.62.29"
+  InheritPersonalization="true">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="MnjMfgFinishOffStand"
+    Cardinality="1"
+    Source="true"
+    Owner="model.entities.MnjMfgFinishOffStand">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="MnjMfgFinishOffStand"/>
+      <Attr Name="_foreignKey"
+        Value="model.entities.MnjMfgFinishOffStand.MnjMfgFinishOffStandPk"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+      <Attr Name="_minCardinality" Value="1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.entities.MnjMfgFinishOffStand.LineId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="MnjMfgFinishOffStandLEO"
+    Cardinality="-1"
+    Owner="model.entities.MnjMfgFinishOffStandLEO">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="MnjMfgFinishOffStandLEO"/>
+      <Attr Name="_foreignKey"
+        Value="model.entities.MnjMfgFinishOffStandLEO.MnjMfgFinishOffStandLFk"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.entities.MnjMfgFinishOffStandLEO.LineId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

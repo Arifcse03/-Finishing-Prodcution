@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:form id="f1">
+        <af:panelGroupLayout layout="vertical" id="pgl1">
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar id="t1">
+                <af:commandButton actionListener="#{bindings.CreateInsert.execute}"
+                                  text="Create"
+                                  disabled="#{!bindings.CreateInsert.enabled}"
+                                  id="cb1" action="goQuery"/>
+                <af:commandButton actionListener="#{bindings.Delete.execute}"
+                                  text="Delete"
+                                  disabled="#{!bindings.Delete.enabled}"
+                                  id="cb2"/>
+                <af:commandButton text="Edit" id="cb3" action="goQuery"/>
+                <af:commandButton actionListener="#{bindings.Commit.execute}"
+                                  text="Save"
+                                  disabled="#{!bindings.Commit.enabled}"
+                                  id="cb4"/>
+                <af:commandButton actionListener="#{bindings.Rollback.execute}"
+                                  text="Undo"
+                                  disabled="#{!bindings.Rollback.enabled}"
+                                  immediate="true" id="cb5">
+                  <af:resetActionListener/>
+                </af:commandButton>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.MnjMfgFinishProdHView1.collectionModel}"
+                      var="row"
+                      rows="#{bindings.MnjMfgFinishProdHView1.rangeSize}"
+                      emptyText="#{bindings.MnjMfgFinishProdHView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.MnjMfgFinishProdHView1.rangeSize}"
+                      rowBandingInterval="0"
+                      filterModel="#{bindings.HeaderNoSearchQuery.queryDescriptor}"
+                      queryListener="#{bindings.HeaderNoSearchQuery.processQuery}"
+                      filterVisible="true" varStatus="vs"
+                      selectedRowKeys="#{bindings.MnjMfgFinishProdHView1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.MnjMfgFinishProdHView1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="resId1" width="100%"
+                      partialTriggers="::cb1 ::cb2">
+              <af:column sortProperty="HeaderNo" filterable="true"
+                         sortable="true"
+                         headerText="Doc No."
+                         id="resId1c2" align="center" width="60">
+                <af:outputText value="#{row.HeaderNo}" id="ot7"/>
+              </af:column>
+              <af:column sortProperty="DocDate" filterable="true"
+                         sortable="true"
+                         headerText="Production Date"
+                         id="resId1c3" align="center">
+                <f:facet name="filter">
+                  <af:inputDate value="#{vs.filterCriteria.DocDate}" id="id2"/>
+                </f:facet>
+                <af:outputText value="#{row.DocDate}" id="ot5">
+                  <af:convertDateTime pattern="#{bindings.MnjMfgFinishProdHView1.hints.DocDate.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column headerText="Buyer Name"
+                         id="c1" filterFeatures="caseInsensitive"
+                         sortable="true" filterable="true" align="center"
+                         sortProperty="Buyer">
+                <af:outputText value="#{row.Buyer}" id="ot1"/>
+              </af:column>
+              <af:column headerText="Style Name"
+                         id="c2" filterFeatures="caseInsensitive"
+                         sortable="true" filterable="true" align="center"
+                         sortProperty="StyleName">
+                <af:outputText value="#{row.StyleName}" id="ot3"/>
+              </af:column>
+              <af:column headerText="Season"
+                         id="c3" filterFeatures="caseInsensitive"
+                         sortable="true" filterable="true" align="center"
+                         sortProperty="Season">
+                <af:outputText value="#{row.Season}" id="ot4"/>
+              </af:column>
+              <af:column headerText="Color"
+                         id="c4" filterFeatures="caseInsensitive"
+                         sortable="true" filterable="true" align="center"
+                         sortProperty="Color">
+                <af:outputText value="#{row.Color}" id="ot6"/>
+              </af:column>
+              <af:column headerText="LineNo"
+                         id="c5" filterFeatures="caseInsensitive"
+                         sortable="true" filterable="true" align="center"
+                         sortProperty="LineNo" width="50">
+                <af:outputText value="#{row.LineNo}" id="ot8"/>
+              </af:column>
+              <af:column headerText="Day Production"
+                         id="c6" align="center" sortable="true"
+                         filterable="true" sortProperty="TotalProduction"
+                         width="80">
+                <af:inputText value="#{row.bindings.TotalProduction.inputValue}"
+                              label="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.label}"
+                              required="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.mandatory}"
+                              columns="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.displayWidth}"
+                              maximumLength="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.precision}"
+                              shortDesc="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.tooltip}"
+                              id="it1" readOnly="true">
+                  <f:validator binding="#{row.bindings.TotalProduction.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.TotalProduction.format}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Day Rejection"
+                         id="c12" align="center" sortable="true"
+                         filterable="true" sortProperty="DayRejection"
+                         width="60">
+                <af:outputText value="#{row.DayRejection}" id="ot14">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.DayRejection.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column headerText="Efficiency" id="c9"
+                         sortProperty="Efficiency" sortable="true"
+                         align="center" filterable="true" width="60">
+                <af:outputText value="#{row.Efficiency}" id="ot11">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.Efficiency.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column sortProperty="Remarks" filterable="true"
+                         sortable="true" headerText="Remarks" id="resId1c4"
+                         align="center" width="150">
+                <af:outputText value="#{row.Remarks}" id="ot2"/>
+              </af:column>
+              <af:column headerText="Document Creation Date"
+                         id="c11" align="center" sortable="true"
+                         filterable="true" sortProperty="CreationDate"
+                         width="70">
+                <af:outputText value="#{row.CreationDate}" id="ot13">
+                  <af:convertDateTime pattern="#{bindings.MnjMfgFinishProdHView1.hints.CreationDate.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column headerText="Total Attended Mins" id="c8"
+                         sortProperty="TotalAttended" align="center"
+                         sortable="true" filterable="true" width="60">
+                <af:outputText value="#{row.TotalAttended}" id="ot10">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.TotalAttended.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column headerText="Total Produced Mins"
+                         id="c7" align="center" sortable="true"
+                         filterable="true" sortProperty="TotalProducedMin"
+                         width="60">
+                <af:outputText value="#{row.TotalProducedMin}" id="ot9">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.TotalProducedMin.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column headerText="Total Off-Standard Mins"
+                         id="c10" sortProperty="OffStandardMin" sortable="true"
+                         align="center" filterable="true" width="60">
+                <af:outputText value="#{row.OffStandardMin}" id="ot12">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.MnjMfgFinishProdHView1.hints.OffStandardMin.format}"/>
+                </af:outputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+          <af:panelHeader text="Finishing Production" id="ph1">
+            <af:query id="qryId1" headerText="Search" disclosed="true"
+                      value="#{bindings.HeaderNoSearchQuery.queryDescriptor}"
+                      model="#{bindings.HeaderNoSearchQuery.queryModel}"
+                      queryListener="#{bindings.HeaderNoSearchQuery.processQuery}"
+                      queryOperationListener="#{bindings.HeaderNoSearchQuery.processQueryOperation}"
+                      resultComponentId="pc1:resId1"/>
+          </af:panelHeader>
+        </af:panelGroupLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
