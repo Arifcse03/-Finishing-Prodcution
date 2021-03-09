@@ -282,6 +282,13 @@
                                       pattern="#{bindings.FillSizeVO1.hints.TotalQty.format}"/>
                   </af:outputText>
                 </af:column>
+                <af:column headerText="#{bindings.FillSizeVO1.hints.BpoId.label}"
+                           id="c3" visible="false">
+                  <af:outputText value="#{row.BpoId}" id="ot29">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.FillSizeVO1.hints.BpoId.format}"/>
+                  </af:outputText>
+                </af:column>
                 <af:column headerText="Total Production"
                            id="c2" align="center">
                   <af:inputText value="#{row.bindings.PrevProdQty.inputValue}"

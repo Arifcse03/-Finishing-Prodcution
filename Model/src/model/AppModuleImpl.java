@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
 
 import javax.servlet.http.HttpSession;
 
+import javax.swing.text.Style;
+
 import model.common.AppModule;
 
 import model.lov.AdditionPOPVOImpl;
@@ -519,23 +521,39 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
     }
 
     public void setRollwhereClause1() {
-        System.out.println("Wher clause cut no -->" + getstyle());
+     // System.out.println("Wher clause cut no -->" + getstyle());
 
         ViewObject vo = getFillSizeVO1();
         //vo.setWhereClause("OC_NO = '"+getstyle()+"'");
 
         //        vo.setWhereClause("OC_NO='" + getstyle() + "' and LINE_NO='" +
         //                          getSLno() + "'");
-
+/* 
         vo.setWhereClause("STYLE_NAME = '" + getstyle_name() +
                           "'and SEASON = '" + getseason() + "'and OC_NO = '" +
                           getstyle() + "' and LINE_NO = '" + getSLno() +
-                          "' and COLOR = '" + getcolor() + "'");
-
-
+                          "' and COLOR = '" + getcolor() + "'");*/
+//to filter the fillsizevo with bpo id
+        
+        vo.setWhereClause("BPO_ID = '" + getbpo_id() + "'");
         vo.executeQuery();
     }
 
+    public String getbpo_id() {
+
+        ViewObject vo = getMnjMfgFinishProdLView1();
+        String bpoid = null;
+        try {
+            bpoid = vo.getCurrentRow().getAttribute("BpoId").toString();
+            System.out.println("bpoid: " + bpoid);
+        } catch (Exception e) {
+            // TODO: Add catch code
+            e.printStackTrace();
+        }
+
+        return bpoid;
+
+    }
 
     public String getstyle_name() {
 

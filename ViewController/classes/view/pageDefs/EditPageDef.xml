@@ -229,6 +229,7 @@
           <Item Value="Inseam"/>
           <Item Value="PrevProdQty"/>
           <Item Value="DayRejPreQty"/>
+          <Item Value="BpoId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

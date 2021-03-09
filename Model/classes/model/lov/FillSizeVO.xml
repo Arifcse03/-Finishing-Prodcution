@@ -31,7 +31,7 @@
     </Properties>
   </Variable>
   <Variable
-    Name="p_Org_Id"
+    Name="P_ORG_ID"
     Kind="where"
     Type="java.lang.String">
     <Properties>
@@ -40,163 +40,148 @@
           Value="Hide"/>
       </SchemaBasedProperties>
     </Properties>
-    <TransientExpression><![CDATA[adf.context.sessionScope.orgId]]></TransientExpression>
+    <TransientExpression><![CDATA[341//adf.context.sessionScope.orgId]]></TransientExpression>
   </Variable>
   <SQLQuery>
-    <![CDATA[SELECT STYLE_name,
- OC_NO,
- MAIN_Q.LINE_NO,
- (TOTAL_QTY) TOTAL_QTY,
- INSEAM_SIZE_CONCAT,
- INSEAM,
- sum(SIZE_QTY) SIZE_QTY,
- NVL(Main_q.TOTAL_DAY_PRODUCTION,0) PREV_PROD_QTY,
- NVL(Main_q.TOTAL_DAY_REJECTION,0) DAY_REJ_PRE_QTY,
- (TOTAL_QTY) - (NVL(Main_q.TOTAL_DAY_PRODUCTION,0) - NVL(Main_q.TOTAL_DAY_REJECTION,0)) WIP_QTY,
- SEASON,
- Color
-FROM 
-( 
-SELECT 
- MMC.LINE_NO,
- OOLA.USER_ITEM_DESCRIPTION ,
- MMC.STYLE_Name ,
- MMC.BUYER_ID,
- MMC.SEASON,
- OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER OC_NO,
- MMCD.QUANTITY TOTAL_QTY,
- (SELECT MMRSV.SIZE1 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1 
- ) INSEAM_SIZE_CONCAT,
- (SELECT MMRSV.INSEAM 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1 
- ) INSEAM,
- ROUND(SIZE_D.SIZE_QTY) SIZE_QTY,
- OOHA.CUST_PO_NUMBER, 
- OOHA.HEADER_ID,
- OOHA.ORG_ID,
- mmcl.attribute3 Color,
- 
- (SELECT SUM(NVL(DDD.DAY_PROD, 0)) 
- FROM MNJ_MFG_FINISH_PROD_L LL, MNJ_MFG_FINISH_PROD_D DDD
- WHERE DDD.LINE_ID = LL.LINE_ID
- and LL.SALE_ORDER_ID = OOHA.HEADER_ID
- AND LL.LINE_NO = MMC.LINE_NO
- and LL.STN_NO = OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER
- and DDD.SIZE_INSEAM = (SELECT MMRSV.INSEAM 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT= MMRSV.SIZE_INSEAM
- AND ROWNUM = 1) 
- and DDD.SIZE_VALUE = (SELECT MMRSV.SIZE1 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1))TOTAL_DAY_PRODUCTION,
- 
- (SELECT SUM(NVL(DDD.DAY_REJECTION, 0)) 
- FROM MNJ_MFG_FINISH_PROD_L LL, MNJ_MFG_FINISH_PROD_D DDD
- WHERE DDD.LINE_ID = LL.LINE_ID
- and LL.SALE_ORDER_ID = OOHA.HEADER_ID
- AND LL.LINE_NO = MMC.LINE_NO
- and LL.STN_NO = OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER
- and DDD.SIZE_INSEAM = (SELECT MMRSV.INSEAM 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT= MMRSV.SIZE_INSEAM
- AND ROWNUM = 1) 
- and DDD.SIZE_VALUE = (SELECT MMRSV.SIZE1 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1))TOTAL_DAY_REJECTION
- 
- 
- FROM 
- oe_order_headers_all ooha,
- Oe_Order_Lines_All oola,
- MNJ_MFG_ISSUE_TO_FINISH_H mmc,
- MNJ_MFG_ISSUE_TO_FINISH_L mmcl,
- MNJ_MFG_ISSUE_FIN_INSEAM_SIZE MMCD,
- wip_discrete_jobs_v wdj,
- MNJ_MFG_RATIOPLAN rrp,
- MNJ_MFG_RATIOPLAN_BPOS_ALL he,
- MNJ_MFG_RATIOPLAN_STNS_ALL bb,
- hz_parties hp,
- mtl_system_items_b msib,
- hz_cust_accounts hca,
- MNJ_COLOR_V MCV,
- CUST_MNJ_ONT_SO_OBINSLINE SIZE_D,
- CUST_MNJ_ONT_SO_OBIN_SIZLINE SIZE_L
-WHERE 1 = 1
-AND HE.SALE_ORDER_ID = OOHA.HEADER_ID
-AND RRP.RATIOPLAN_ID = HE.RATIOPLAN_ID
-AND HE.SALE_ORDER_ID = OOHA.HEADER_ID
-AND HCA.CUST_ACCOUNT_ID = OOHA.SOLD_TO_ORG_ID
-AND OOHA.HEADER_ID = OOLA.HEADER_ID
-AND MMC.HEADER_ID = MMCL.HEADER_ID
-AND MMCL.LINE_ID = MMCD.LINE_ID
-AND SIZE_L.SO_OBINSLINE_ID = SIZE_D.SO_OBINSLINE_ID
- AND SIZE_L.SALES_ORDER_ID = OOHA.HEADER_ID
-AND HCA.CUST_ACCOUNT_ID = MMC.BUYER_ID
-AND OOHA.CUST_PO_NUMBER = (SUBSTR(BB.STN_NO,0,INSTR(BB.STN_NO,'/')-1))
---AND OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER = WDJ.ATTRIBUTE2
---AND OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER = WDJ.ATTRIBUTE2
---AND OOHA.HEADER_ID = WDJ.ATTRIBUTE1
-and rrp.style=wdj.attribute6
-and rrp.season=wdj.attribute7
-and rrp.color=wdj.attribute8
-AND WDJ.CLASS_CODE = 'FIN'
-AND MSIB.ORGANIZATION_ID = 353
-AND MSIB.INVENTORY_ITEM_ID = OOLA.INVENTORY_ITEM_ID
-AND HP.PARTY_ID = HCA.PARTY_ID
-
-AND OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER=MMCL.ATTRIBUTE2 -------------ppppppppppppppppppp
- AND MMC.BUYER_ID = OOHA.SOLD_TO_ORG_ID
- 
- AND MMC.STYLE_Name = OOHA.SHIPPING_INSTRUCTIONS -------------------ppppppppppppppppppp
-
- AND MMC.SEASON = OOHA.ATTRIBUTE4
-AND rrp.color = mmcl.attribute3 
-AND MCV.FLEX_VALUE = MSIB.SEGMENT4
-
-and mmcd.ATTRIBUTE1 = (SELECT MMRSV.INSEAM 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1 
- ) 
- 
- and mmcd.SIZE_INSEAM = (SELECT MMRSV.SIZE1 
- FROM MNJ_MFG_RATIO_SIZE_V MMRSV 
- WHERE SIZE_D.INSEAM_SIZE_CONCAT = MMRSV.SIZE_INSEAM
- AND ROWNUM = 1 
- ) 
-
-AND (SELECT DISTINCT mmoda.final_mfg_org_id
- FROM mnj_mfg_osp_dep_assign mmoda,
- mnj_mfg_osp_stn_line mmosl
- WHERE mmoda.stn_line_id = mmosl.stn_line_id
- AND MMOSL.STN = OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER
- AND MMODA.FINAL_DEPARTMENT = 'Finishing') =:p_Org_Id
-
-) MAIN_Q 
-
-WHERE 1=1
-and MAIN_Q.TOTAL_QTY <> 0
-
-GROUP BY 
- MAIN_Q.LINE_NO,
- USER_ITEM_DESCRIPTION ,
- STYLE_name,
- OC_NO,
- TOTAL_QTY,
- INSEAM_SIZE_CONCAT,
- INSEAM,
- NVL(Main_q. TOTAL_DAY_PRODUCTION,0),
- NVL(Main_q.TOTAL_DAY_REJECTION,0),
- BUYER_ID,
- SEASON,
- Color]]>
+    <![CDATA[/* Formatted on 3/9/2021 12:47:26 PM (QP5 v5.256.13226.35510) by Developed By Syed Abdul Ahad */
+  SELECT MAIN_Q.STYLE_NAME STYLE_NAME,
+         MAIN_Q.SEASON SEASON,
+         MAIN_Q.WASH WASH,
+         MAIN_Q.COLOR COLOR,
+         MAIN_Q.BPO_NO BPO_NO,
+         MAIN_Q.LINE_NO LINE_NO,
+         (MAIN_Q.TOTAL_QTY) TOTAL_QTY,
+         MAIN_Q.INSEAM_SIZE_CONCAT INSEAM_SIZE_CONCAT,
+         MAIN_Q.INSEAM INSEAM,
+         SUM (MAIN_Q.SIZE_QTY) SIZE_QTY,
+         NVL (MAIN_Q.TOTAL_DAY_PRODUCTION, 0) PREV_PROD_QTY,
+         NVL (MAIN_Q.TOTAL_DAY_REJECTION, 0) DAY_REJ_PRE_QTY,
+           (MAIN_Q.TOTAL_QTY)
+         - (  NVL (MAIN_Q.TOTAL_DAY_PRODUCTION, 0)
+            - NVL (MAIN_Q.TOTAL_DAY_REJECTION, 0))
+            WIP_QTY,
+            MAIN_Q.BPO_ID
+    FROM (SELECT MMC.LINE_NO,
+                 OOHA.ITEM_DESCRIPTION,
+                 OOHA.STYLE STYLE_NAME,
+                 OOHA.BUYER_ID,
+                 OOHA.SEASON,
+                 B.BPO BPO_NO,
+                 B.BPO_ID BPO_ID,
+                 MMCD.QUANTITY TOTAL_QTY,
+                 (SELECT MMRSV.SIZE1
+                    FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                   WHERE SIZE_L.SIZE_NAME = MMRSV.SIZE_INSEAM AND ROWNUM = 1)
+                    INSEAM_SIZE_CONCAT,
+                 (SELECT MMRSV.INSEAM
+                    FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                   WHERE SIZE_L.SIZE_NAME = MMRSV.SIZE_INSEAM AND ROWNUM = 1)
+                    INSEAM,
+                 ROUND (SIZE_L.QTY) SIZE_QTY,
+                 B.BPO,
+                 OOHA.POC_ID HEADER_ID,
+                 OOHA.LC_UNIT ORG_ID,
+                 OOLA.WASH_NAME WASH,
+                 OOLA.COLOR COLOR,
+                 (SELECT SUM (NVL (DDD.DAY_PROD, 0))
+                    FROM MNJ_MFG_FINISH_PROD_L LL, MNJ_MFG_FINISH_PROD_D DDD
+                   WHERE     DDD.LINE_ID = LL.LINE_ID
+                         --and LL.SALE_ORDER_ID = OOHA.HEADER_ID
+                         AND LL.LINE_NO = MMC.LINE_NO
+                         AND LL.BPO_ID = B.BPO_ID
+                         --and LL.STN_NO = OOHA.CUST_PO_NUMBER || '/' || OOLA.LINE_NUMBER
+                         AND DDD.SIZE_INSEAM =
+                                (SELECT MMRSV.INSEAM
+                                   FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                                  WHERE     SIZE_L.SIZE_NAME =
+                                               MMRSV.SIZE_INSEAM
+                                        AND ROWNUM = 1)
+                         AND DDD.SIZE_VALUE =
+                                (SELECT MMRSV.SIZE1
+                                   FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                                  WHERE     SIZE_L.SIZE_NAME =
+                                               MMRSV.SIZE_INSEAM
+                                        AND ROWNUM = 1))
+                    TOTAL_DAY_PRODUCTION,
+                 (SELECT SUM (NVL (DDD.DAY_REJECTION, 0))
+                    FROM MNJ_MFG_FINISH_PROD_L LL, MNJ_MFG_FINISH_PROD_D DDD
+                   WHERE     DDD.LINE_ID = LL.LINE_ID
+                         AND LL.LINE_NO = MMC.LINE_NO
+                         AND LL.BPO_ID = B.BPO_ID
+                         AND DDD.SIZE_INSEAM =
+                                (SELECT MMRSV.INSEAM
+                                   FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                                  WHERE     SIZE_L.SIZE_NAME =
+                                               MMRSV.SIZE_INSEAM
+                                        AND ROWNUM = 1)
+                         AND DDD.SIZE_VALUE =
+                                (SELECT MMRSV.SIZE1
+                                   FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                                  WHERE     SIZE_L.SIZE_NAME =
+                                               MMRSV.SIZE_INSEAM
+                                        AND ROWNUM = 1))
+                    TOTAL_DAY_REJECTION
+            FROM WIP.WIP_DISCRETE_JOBS WDJ,
+                 MNJ_MFG_ISSUE_TO_FINISH_H MMC,
+                 MNJ_MFG_ISSUE_TO_FINISH_L MMCL,
+                 MNJ_MFG_ISSUE_FIN_INSEAM_SIZE MMCD,
+                 HZ_PARTIES HP,
+                 HZ_CUST_ACCOUNTS HCA,
+                 MTL_SYSTEM_ITEMS_B MSIB,
+                 MNJ_MFG_RATIOPLAN_STNS_ALL BB,
+                 MNJ_MFG_RATIOPLAN RRP,
+                 XX_OM_SIZEWISE_L_T SIZE_L,
+                 XX_OM_BPO_INFO_T B,
+                 XX_OM_POC_L_T OOLA,
+                 XX_OM_POC_H_T OOHA
+           WHERE     1 = 1
+                 AND MMCD.ATTRIBUTE1 =
+                        (SELECT MMRSV.INSEAM
+                           FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                          WHERE     SIZE_L.SIZE_NAME = MMRSV.SIZE_INSEAM
+                                AND ROWNUM = 1)
+                 AND MMCD.SIZE_INSEAM =
+                        (SELECT MMRSV.SIZE1
+                           FROM MNJ_MFG_RATIO_SIZE_V MMRSV
+                          WHERE     SIZE_L.SIZE_NAME = MMRSV.SIZE_INSEAM
+                                AND ROWNUM = 1)
+                 AND WDJ.ATTRIBUTE10 = TO_CHAR (RRP.SYSTEM_ID)
+                 AND B.BPO_ID = MMCL.BPO_ID
+                 AND MMCL.LINE_ID = MMCD.LINE_ID
+                 AND MMC.HEADER_ID = MMCL.HEADER_ID
+                 AND MMC.POC_ID = OOHA.POC_ID
+                 AND MSIB.INVENTORY_ITEM_ID = BB.INVENTORY_ITEM_ID
+                 AND RRP.RATIOPLAN_ID = BB.RATIOPLAN_ID
+                 AND BB.BPO_ID = B.BPO_ID
+                 AND SIZE_L.BPO_ID = B.BPO_ID
+                 AND OOLA.FOB_ID = B.FOB_ID
+                 AND HCA.CUST_ACCOUNT_ID = OOHA.BUYER_ID
+                 AND HP.PARTY_ID = HCA.PARTY_ID
+                 AND OOHA.POC_ID = OOLA.POC_ID
+                 AND WDJ.STATUS_TYPE NOT IN (7, 12)
+                 AND WDJ.CLASS_CODE = 'FIN'
+                 AND MSIB.ORGANIZATION_ID = 353
+                 AND (SELECT MMODA.FINAL_MFG_ORG_ID
+                        FROM MNJ_MFG_OSP_DEP_ASSIGN MMODA,
+                             MNJ_MFG_OSP_STN_LINE MMOSL
+                       WHERE     MMODA.STN_LINE_ID = MMOSL.STN_LINE_ID
+                             AND MMODA.FINAL_DEPARTMENT = 'Finishing'
+                             AND MMOSL.BPO_ID = B.BPO_ID) = :P_ORG_ID
+         ) MAIN_Q
+   WHERE 1 = 1 AND MAIN_Q.TOTAL_QTY <> 0
+GROUP BY MAIN_Q.LINE_NO,
+         MAIN_Q.STYLE_NAME,
+         MAIN_Q.BPO_NO,
+         MAIN_Q.BPO_ID,
+         MAIN_Q.TOTAL_QTY,
+         MAIN_Q.INSEAM_SIZE_CONCAT,
+         MAIN_Q.INSEAM,
+         NVL (MAIN_Q.TOTAL_DAY_PRODUCTION, 0),
+         NVL (MAIN_Q.TOTAL_DAY_REJECTION, 0),
+         MAIN_Q.BUYER_ID,
+         MAIN_Q.SEASON,
+         MAIN_Q.WASH,
+         MAIN_Q.COLOR]]>
   </SQLQuery>
   <ViewAttribute
     Name="StyleName"
@@ -214,18 +199,63 @@ GROUP BY
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
-    Name="OcNo"
+    Name="Season"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Precision="40"
+    Precision="500"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    AliasName="OC_NO"
-    Expression="OC_NO"
+    AliasName="SEASON"
+    Expression="SEASON"
     SQLType="VARCHAR">
     <DesignTime>
-      <Attr Name="_DisplaySize" Value="40"/>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Wash"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="WASH"
+    Expression="WASH"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Color"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="250"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COLOR"
+    Expression="COLOR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BpoNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BPO_NO"
+    Expression="BPO_NO"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
@@ -344,33 +374,32 @@ GROUP BY
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
-    Name="Season"
+    Name="BpoId"
     IsUpdateable="false"
     IsPersistent="false"
+    IsNotNull="true"
     PrecisionRule="true"
-    Precision="500"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="SEASON"
-    Expression="SEASON"
-    SQLType="VARCHAR">
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="BPO_ID"
+    Expression="BPO_ID"
+    SQLType="NUMERIC">
     <DesignTime>
-      <Attr Name="_DisplaySize" Value="500"/>
+      <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
-    Name="Color"
+    Name="OcNo"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Precision="250"
+    Precision="40"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    AliasName="COLOR"
-    Expression="COLOR"
+    AliasName="OC_NO"
     SQLType="VARCHAR">
     <DesignTime>
-      <Attr Name="_DisplaySize" Value="250"/>
+      <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
