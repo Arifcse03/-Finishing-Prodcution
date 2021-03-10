@@ -40,7 +40,7 @@
           Value="Hide"/>
       </SchemaBasedProperties>
     </Properties>
-    <TransientExpression><![CDATA[341//adf.context.sessionScope.orgId]]></TransientExpression>
+    <TransientExpression><![CDATA[adf.context.sessionScope.orgId]]></TransientExpression>
   </Variable>
   <SQLQuery>
     <![CDATA[/* Formatted on 3/9/2021 12:47:26 PM (QP5 v5.256.13226.35510) by Developed By Syed Abdul Ahad */
